@@ -1,0 +1,63 @@
+# =============================================
+#  Jekyll configuration — jekyll-theme-minimal
+#  GitHub Pages / docs/ folder
+# =============================================
+
+# ---------------------
+# Site identity
+# ---------------------
+title: MAI Anh Tuan
+description: Tech Lead · Paris — Build with Care, Scale with Intelligence.
+author: MAI Anh Tuan
+url: "https://anhtuanmai.github.io"   
+baseurl: "" 
+
+# ---------------------
+# Theme
+# ---------------------
+theme: jekyll-theme-minimal
+
+# ---------------------
+# Contact (used in layout)
+# ---------------------
+email: anhtuan.mai19@gmail.com
+
+# ---------------------
+# Social links (optional — shown in sidebar)
+# ---------------------
+github_username:    anhtuanmai
+linkedin_username:  anhtuanm
+
+# ---------------------
+# Build settings
+# ---------------------
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  auto_ids: true
+  hard_wrap: false
+
+# ---------------------
+# Plugins (all supported natively by GitHub Pages)
+# ---------------------
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# ---------------------
+# SEO (used by jekyll-seo-tag)
+# ---------------------
+logo: /assets/img/avatar.jpeg      # Optional profile photo — place file in docs/assets/img/
+
+# ---------------------
+# Exclusions (not copied to _site)
+# ---------------------
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - .gitignore
+  - node_modules/
+  - vendor/
