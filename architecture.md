@@ -1,3 +1,4 @@
+```
 your-username.github.io/          ← git repository root
 │
 ├── docs/                         ← GitHub Pages source (Jekyll root)
@@ -28,3 +29,4 @@ your-username.github.io/          ← git repository root
 │
 ├── .gitignore
 └── README.md
+```
