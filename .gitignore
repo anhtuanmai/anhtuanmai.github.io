@@ -5,8 +5,12 @@ Thumbs.db
 # Editor / IDE
 .vscode/
 .idea/
+*.sublime-project
+*.sublime-workspace
 *.swp
 *.swo
+*.sw[p_]
+*~
 
 # Local environment
 .env
@@ -18,3 +22,21 @@ Thumbs.db
 # Temp / cache
 .cache/
 tmp/
+
+# Ruby / Bundler
+*.gem
+.bundle
+**/vendor/bundle
+
+# Node.js
+node_modules
+npm-debug.log*
+package-lock.json
+codekit-config.json
+
+# Jekyll
+.jekyll-cache
+.jekyll-metadata
+.sass-cache
+_asset_bundler_cache
+_site
