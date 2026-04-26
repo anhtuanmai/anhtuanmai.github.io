@@ -5,8 +5,13 @@ Thumbs.db
 # Editor / IDE
 .vscode/
 .idea/
+*.idea
+*.sublime-project
+*.sublime-workspace
 *.swp
 *.swo
+*.sw[p_]
+*~
 
 # Local environment
 .env
@@ -19,33 +24,19 @@ Thumbs.db
 .cache/
 tmp/
 
-# Vim
-*~
-*.sw[p_]
-
-# IntelliJ IDEA
-*.idea
-
-# Sublime Text
-*.sublime-project
-*.sublime-workspace
-
-# Ruby Gem
+# Ruby / Bundler
 *.gem
 .bundle
 Gemfile.lock
 **/vendor/bundle
 
-# Node.js and NPM
+# Node.js
 node_modules
 npm-debug.log*
 package-lock.json
 codekit-config.json
 
-# macOS
-.DS_Store
-
-# Jekyll generated files
+# Jekyll
 .jekyll-cache
 .jekyll-metadata
 .sass-cache
