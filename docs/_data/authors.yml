@@ -1,0 +1,23 @@
+# Authors
+
+Anh Tuan Mai:
+  name        : "Anh Tuan Mai"
+  bio         : "Build with Care, Scale with Intelligent."
+  avatar      : "/assets/images/anhtuan-profile-picture.jpeg"
+  location    : "Paris, FR"
+  links:
+    - label: "Resume"
+      icon: "fas fa-fw fa-user"
+      url: "/cv/"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin-in"
+      url: "https://www.linkedin.com/in/anhtuanm/"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/anhtuanmai"
+    - label: "Stack Overflow"
+      icon: "fab fa-fw fa-stack-overflow"
+      url: "https://stackoverflow.com/users/4774963/anh-tuan-mai?tab=profile"
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope"
+      url: "/contact/"

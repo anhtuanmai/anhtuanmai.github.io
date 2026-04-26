@@ -1,0 +1,10 @@
+# main links
+main:
+  - title: "Home"
+    url: /
+  - title: "Blog"
+    url: /blog/
+  - title: "Resume"
+    url: /cv/
+  - title: "Contact"
+    url: /contact/

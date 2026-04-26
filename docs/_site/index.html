@@ -1,0 +1,398 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <title>Anh Tuan Mai - Personal Blog</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Anh Tuan Mai" />
+    <meta name="description" content="Build with Care, Scale with Intelligent.">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <link rel="canonical" href="http://localhost:4000/">
+    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,300,900">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Reset */
+        html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+        blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em,
+        img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u,
+        i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table,
+        caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details,
+        embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby,
+        section, summary, time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+
+        body {
+            line-height: 1;
+        }
+
+        ol, ul {
+            list-style: none;
+        }
+
+        body {
+            -webkit-text-size-adjust: none;
+        }
+
+        /* Box Model */
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+
+        /* Basic */
+        body, input, select, textarea {
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            font-size: 15pt;
+            font-weight: 300 !important;
+            letter-spacing: -0.025em;
+            line-height: 1.75em;
+        }
+
+        body {
+            background: #2b2d54;
+            overflow: hidden;
+        }
+
+        body.loading * {
+            animation: none !important;
+        }
+
+        a {
+            transition: border-color 0.2s ease-in-out;
+            border-bottom: dotted 1px;
+            color: inherit;
+            outline: 0;
+            text-decoration: none;
+        }
+
+        a:hover {
+            border-color: transparent;
+        }
+
+        /* Icon */
+        .icon {
+            text-decoration: none;
+            position: relative;
+        }
+
+        .icon > .label {
+            display: none;
+        }
+
+        /* Wrapper animation */
+        @keyframes wrapper {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        #wrapper {
+            animation: wrapper 2s forwards;
+            height: 100%;
+            left: 0;
+            opacity: 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        /* Background */
+        #bg {
+            background: #2b2d54 url("/assets/images/bg-sunset.webp") no-repeat center center fixed;
+            background-size: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Main */
+        #main {
+            height: 100%;
+            left: 0;
+            position: fixed;
+            text-align: center;
+            top: 0;
+            width: 100%;
+        }
+
+        #main:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            margin-right: 0;
+            vertical-align: middle;
+            width: 1px;
+        }
+
+        /* Header animation */
+        @keyframes header {
+            0% {
+                transform: translate3d(0, -1em, 0);
+                opacity: 0;
+            }
+            100% {
+                transform: translate3d(0, 0, 0);
+                opacity: 1;
+            }
+        }
+
+        /* Nav icons animation */
+        @keyframes nav-icons {
+            0% {
+                transform: translate3d(0, 1em, 0);
+                opacity: 0;
+            }
+            100% {
+                transform: translate3d(0, 0, 0);
+                opacity: 1;
+            }
+        }
+
+        #header {
+            animation: header 1s 1s forwards;
+            backface-visibility: hidden;
+            transform: translate3d(0, 0, 0);
+            cursor: default;
+            display: inline-block;
+            opacity: 0;
+            position: relative;
+            text-align: center;
+            top: 3em;
+            vertical-align: top;
+            width: 90%;
+        }
+
+        #header h1 {
+            font-size: 4em;
+            font-weight: 900;
+            line-height: 1em;
+        }
+
+        #header p {
+            font-size: 1.25em;
+            margin: 0.75em 0 0.25em 0;
+            opacity: 0.75;
+        }
+
+        #header nav {
+            margin: 1.5em 0 0 0;
+        }
+
+        #header nav li {
+            animation: nav-icons 0.5s ease-in-out forwards;
+            backface-visibility: hidden;
+            transform: translate3d(0, 0, 0);
+            display: inline-block;
+            height: 5.35em;
+            line-height: 5.885em;
+            opacity: 0;
+            position: relative;
+            top: 0;
+            width: 5.35em;
+        }
+
+        #header nav li:nth-child(1)  { animation-delay: 1.5s; }
+        #header nav li:nth-child(2)  { animation-delay: 1.75s; }
+        #header nav li:nth-child(3)  { animation-delay: 2s; }
+        #header nav li:nth-child(4)  { animation-delay: 2.25s; }
+        #header nav li:nth-child(5)  { animation-delay: 2.5s; }
+        #header nav li:nth-child(6)  { animation-delay: 2.75s; }
+        #header nav li:nth-child(7)  { animation-delay: 3s; }
+        #header nav li:nth-child(8)  { animation-delay: 3.25s; }
+        #header nav li:nth-child(9)  { animation-delay: 3.5s; }
+        #header nav li:nth-child(10) { animation-delay: 3.75s; }
+
+        #header nav a {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            border: 0;
+            display: inline-block;
+        }
+
+        #header nav a i {
+            transition: all 0.2s ease-in-out;
+            border-radius: 100%;
+            border: solid 1px #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75em;
+            height: 2.5em;
+            width: 2.5em;
+            position: relative;
+            text-align: center;
+        }
+
+        #header nav a:hover {
+            font-size: 1.1em;
+        }
+
+        #header nav a:hover i {
+            background-color: rgba(255, 255, 255, 0.175);
+            color: #fff;
+        }
+
+        #header nav a:active {
+            font-size: 0.95em;
+            background: none;
+        }
+
+        #header nav a:active i {
+            background-color: rgba(255, 255, 255, 0.35);
+            color: #fff;
+        }
+
+        #header nav a span {
+            display: none;
+        }
+
+        /* "Enter Site" link */
+        #enter-site {
+            animation: nav-icons 0.5s ease-in-out forwards;
+            animation-delay: 3.25s;
+            opacity: 0;
+            margin-top: 1.5em;
+        }
+
+        #enter-site a {
+            display: inline-block;
+            padding: 0.6em 2em;
+            border: solid 1px rgba(255, 255, 255, 0.5);
+            border-radius: 4px;
+            color: #fff;
+            font-size: 0.9em;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        #enter-site a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: #fff;
+        }
+
+        /* Responsive - Wide */
+        @media screen and (max-width: 1680px) {
+            body, input, select, textarea {
+                font-size: 13pt;
+            }
+        }
+
+        /* Responsive - Normal */
+        @media screen and (max-width: 1280px) {
+            body, input, select, textarea {
+                font-size: 12pt;
+            }
+        }
+
+        /* Responsive - Mobile */
+        @media screen and (max-width: 736px) {
+            body {
+                min-width: 320px;
+            }
+
+            body, input, select, textarea {
+                font-size: 11pt;
+            }
+
+            #header h1 {
+                font-size: 2.5em;
+            }
+
+            #header p {
+                font-size: 1em;
+            }
+
+            #header nav {
+                font-size: 1em;
+            }
+
+            #header nav a:hover {
+                font-size: 1em;
+            }
+
+            #header nav a:active {
+                font-size: 1em;
+            }
+        }
+
+        /* Responsive - Mobile Portrait */
+        @media screen and (max-width: 480px) {
+            #header nav {
+                padding: 0 1em;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001s !important;
+                transition-duration: 0.001s !important;
+                animation-delay: 0s !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="loading">
+    <div id="wrapper">
+        <div id="bg"></div>
+        <div id="main">
+            <header id="header">
+                <h1>Anh Tuan Mai</h1>
+                <p>Build with Care, Scale with Intelligent.</p>
+                <nav>
+                    <ul>
+                        
+                        
+                        
+                        <li><a href="/cv/" class="icon" title="Resume"><i class="fas fa-fw fa-user"></i><span class="label">Resume</span></a></li>
+                        
+                        
+                        
+                        
+                        <li><a href="https://www.linkedin.com/in/anhtuanm/" class="icon" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-fw fa-linkedin-in"></i><span class="label">LinkedIn</span></a></li>
+                        
+                        
+                        
+                        
+                        <li><a href="https://github.com/anhtuanmai" class="icon" title="GitHub" target="_blank" rel="noopener noreferrer"><i class="fab fa-fw fa-github"></i><span class="label">GitHub</span></a></li>
+                        
+                        
+                        
+                        
+                        <li><a href="https://stackoverflow.com/users/4774963/anh-tuan-mai?tab=profile" class="icon" title="Stack Overflow" target="_blank" rel="noopener noreferrer"><i class="fab fa-fw fa-stack-overflow"></i><span class="label">Stack Overflow</span></a></li>
+                        
+                        
+                        
+                        
+                        <li><a href="/contact/" class="icon" title="Email"><i class="fas fa-fw fa-envelope"></i><span class="label">Email</span></a></li>
+                        
+                        
+                    </ul>
+                </nav>
+                <div id="enter-site">
+                    <a href="/cv/">Enter Site &rarr;</a>
+                </div>
+            </header>
+        </div>
+    </div>
+    <script>
+        window.onload = function () { document.body.className = ''; }
+        window.ontouchmove = function () { return false; }
+        window.onorientationchange = function () { document.body.scrollTop = 0; }
+    </script>
+</body>
+
+</html>
