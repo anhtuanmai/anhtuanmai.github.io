@@ -1,32 +1,62 @@
 ```
-your-username.github.io/          ← git repository root
+anhtuanmai.github.io/                ← git repository root
 │
-├── docs/                         ← GitHub Pages source (Jekyll root)
+├── docs/                            ← GitHub Pages source (Jekyll root)
 │   │
-│   ├── _config.yml               ← Jekyll configuration
+│   ├── _config.yml                  ← Jekyll configuration (production)
+│   ├── _config.dev.yml              ← Local development overrides
+│   ├── Gemfile                      ← Ruby dependencies (github-pages gem)
+│   ├── Gemfile.lock
+│   ├── Rakefile                     ← `rake build` → jekyll build with dev config
+│   ├── favicon.ico
 │   │
-│   ├── _posts/                   ← Blog articles
-│   │   ├── 2026-04-01-my-first-post.md
-│   │   └── 2026-04-20-kotlin-multiplatform-tips.md
+│   ├── _data/                       ← Site-wide data files
+│   │   ├── authors.yml
+│   │   ├── navigation.yml           ← Top-nav menu
+│   │   └── theme.yml
 │   │
-│   ├── _layouts/                 ← Custom layout overrides (optional)
-│   │   └── default.html
+│   ├── _pages/                      ← Standalone pages
+│   │   ├── home.html                ← Landing page (splash)
+│   │   ├── cv.html                  ← Resume / CV
+│   │   ├── blog.md                  ← Blog listing
+│   │   ├── contact.md
+│   │   ├── category-archive.md
+│   │   ├── tag-archive.md
+│   │   ├── sitemap.md
+│   │   └── 404.md
 │   │
-│   ├── _includes/                ← Reusable HTML partials (optional)
-│   │   └── header.html
+│   ├── _posts/                      ← Published blog articles
+│   │   └── 2018-12-25-voeux-pour-exyzt.md
 │   │
-│   ├── assets/
-│   │   ├── img/
-│   │   │   └── avatar.jpg        ← Profile photo
-│   │   ├── css/
-│   │   │   └── custom.css        ← Style overrides on top of theme
-│   │   └── files/
-│   │       └── cv-mai-anh-tuan.pdf   ← Downloadable PDF resume
+│   ├── _drafts/                     ← Unpublished drafts
+│   │   └── post-draft.md
 │   │
-│   ├── index.md                  ← Homepage (your CV / resume)
-│   ├── blog.md                   ← Blog listing page
-│   └── about.md                  ← Optional about page
+│   ├── _portfolio/                  ← Portfolio collection (excluded from build)
+│   │   └── _template.md
+│   │
+│   ├── _includes/                   ← Theme override partials
+│   │   ├── head/custom.html
+│   │   ├── after-content.html
+│   │   ├── before-related.html
+│   │   └── comments-providers/scripts.html
+│   │
+│   ├── _docs/                       ← Vendored Minimal Mistakes theme docs (reference)
+│   │   └── 01-quick-start-guide.md … 22-faq.md
+│   │
+│   └── assets/
+│       └── images/
+│           ├── anhtuan-profile-picture.jpeg
+│           ├── bg.jpg / bg.webp / bg-sunrise.webp / bg-sunset.webp
+│           └── favicon-*.png / favicon.svg / favicon.ico
 │
-├── .gitignore
+├── architecture.md
 └── README.md
 ```
+
+## Notes
+
+- **Theme**: [`mmistakes/minimal-mistakes`](https://github.com/mmistakes/minimal-mistakes) `@4.28.0`, pulled via `jekyll-remote-theme`. No `_layouts/` or `_sass/` are vendored — overrides go through `_includes/` and `_data/`.
+- **Build**: GitHub Pages auto-builds from `docs/` on push. Local dev: `cd docs && bundle exec jekyll serve --config _config.yml,_config.dev.yml` (or `rake build`).
+- **URL**: <https://anhtuanmai.github.io>
+- **Search**: lunr, full-content indexing enabled.
+- **Excluded from build** (see `_config.yml`): `_portfolio`, `Gemfile`, `Rakefile`, `README`, vendor and cache dirs.
