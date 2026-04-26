@@ -5,7 +5,6 @@ Thumbs.db
 # Editor / IDE
 .vscode/
 .idea/
-*.idea
 *.sublime-project
 *.sublime-workspace
 *.swp
@@ -27,7 +26,6 @@ tmp/
 # Ruby / Bundler
 *.gem
 .bundle
-Gemfile.lock
 **/vendor/bundle
 
 # Node.js
