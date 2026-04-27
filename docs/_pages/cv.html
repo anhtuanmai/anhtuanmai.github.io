@@ -79,7 +79,7 @@ title: "Resume - Anh Tuan Mai"
   <div class="container">
     <div class="mb-3 d-flex justify-content-between">
       <a href="{{ '/' | relative_url }}" class="btn btn-outline-dark btn-sm">&larr; Home</a>
-      <a href="{{ '/blog/' | relative_url }}" class="btn btn-outline-dark btn-sm">Read My Articles &rarr;</a>
+      <a href="{{ site.posts.first.url | default: '/blog/' | relative_url }}" class="btn btn-outline-dark btn-sm">Read My Articles &rarr;</a>
     </div>
     <div class="card bg-light shadow">
 
