@@ -1,5 +1,26 @@
-task :default => %i[build]
+# Development tasks — NOT used in GitHub Pages production builds.
+#
+# GitHub Pages builds the site itself from `docs/` using `_config.yml` only and
+# never runs `rake`. This file lives inside `docs/` so it travels with the
+# directory if `docs/` is deployed as a self-contained unit (e.g., to a dev
+# server that runs `rake serve`).
+#
+# Usage (from this directory):
+#   bundle exec rake          # default → serve
+#   bundle exec rake serve    # dev server, reachable on LAN at port 4000
+#   bundle exec rake build    # one-shot dev build with profile/trace
+
+DEV_CONFIG = '_config.yml,_config.dev.yml'
+PORT = 4000
+
+task :default => %i[serve]
 
 task :build do
-  sh 'jekyll build --profile --trace --config _config.yml,_config.dev.yml'
+  sh "jekyll build --profile --trace --config #{DEV_CONFIG}"
+end
+
+task :serve do
+  lan_ip = `hostname -I 2>/dev/null`.split.first
+  puts "Local network: http://#{lan_ip}:#{PORT}" if lan_ip
+  sh "jekyll serve --livereload --host 0.0.0.0 --port #{PORT} --config #{DEV_CONFIG}"
 end
