@@ -48,8 +48,8 @@ comments:
     reactions_enabled    : # '1' for enabled (default), '0' for disabled
     theme                : # "light" (default), "dark", "dark_dimmed", "transparent_dark", "preferred_color_scheme"
 reCaptcha:
-  siteKey                : # "6LdRBykTAAAAAFB46MnIu6ixuxwu9W1ihFF8G60Q"
-  secret                 : # "PznnZGu3P6eTHRPLORniSq+J61YEf+A9zmColXDM5icqF49gbunH51B8+h+i2IvewpuxtA9TFoK68TuhUp/X3YKmmqhXasegHYabY50fqF9nJh9npWNhvITdkQHeaOqnFXUIwxfiEeUt49Yoa2waRR7a5LdRAP3SVM8hz0KIBT4="
+  siteKey                : # public site key — safe to commit
+  secret                 : # private secret — DO NOT commit; put in _config.private.yml
 
 atom_feed:
   path                   : # blank (default) uses feed.xml
@@ -58,6 +58,10 @@ atom_feed:
 search                   : true # true, false (default)
 search_full_content      : true # true, false (default)
 search_provider          : lunr # lunr (default), algolia
+
+# Stats counter API (Cloudflare Worker, see /worker). Update this after `wrangler deploy`.
+# Keys are organized as <section>/<id>/<type>, e.g. blog/jekyll-blog-ideas/view, page/cv/view.
+stats_api_url            : "https://anhtuanmai-stats.anhtuan-mai19.workers.dev"
 
 # SEO Related
 #google_site_verification : "" # Replace this with your ID, or delete

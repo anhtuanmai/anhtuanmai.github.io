@@ -1,0 +1,10 @@
+name = "anhtuanmai-stats"
+main = "src/index.js"
+compatibility_date = "2025-10-01"
+
+# KV binding. The id is set after running:
+#   wrangler kv namespace create COUNTERS
+# Wrangler will print the id; paste it below.
+[[kv_namespaces]]
+binding = "COUNTERS"
+id = "333bce6447e64b9a85903dfe5e2272f9"
