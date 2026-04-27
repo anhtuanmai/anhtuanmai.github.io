@@ -4,10 +4,10 @@ anhtuanmai.github.io/                ← git repository root
 ├── docs/                            ← GitHub Pages source (Jekyll root)
 │   │
 │   ├── _config.yml                  ← Jekyll configuration (production)
-│   ├── _config.dev.yml              ← Local development overrides
+│   ├── _config.dev.yml              ← Development overrides (consumed by Rakefile)
 │   ├── Gemfile                      ← Ruby dependencies (github-pages gem)
 │   ├── Gemfile.lock
-│   ├── Rakefile                     ← `rake build` → jekyll build with dev config
+│   ├── Rakefile                     ← `rake serve` / `rake build` with dev config
 │   ├── favicon.ico
 │   │
 │   ├── _data/                       ← Site-wide data files
@@ -26,13 +26,10 @@ anhtuanmai.github.io/                ← git repository root
 │   │   └── 404.md
 │   │
 │   ├── _posts/                      ← Published blog articles
-│   │   └── 2018-12-25-voeux-pour-exyzt.md
 │   │
 │   ├── _drafts/                     ← Unpublished drafts
-│   │   └── post-draft.md
 │   │
 │   ├── _portfolio/                  ← Portfolio collection (excluded from build)
-│   │   └── _template.md
 │   │
 │   ├── _includes/                   ← Theme override partials
 │   │   ├── head/custom.html
@@ -40,15 +37,12 @@ anhtuanmai.github.io/                ← git repository root
 │   │   ├── before-related.html
 │   │   └── comments-providers/scripts.html
 │   │
-│   ├── _docs/                       ← Vendored Minimal Mistakes theme docs (reference)
-│   │   └── 01-quick-start-guide.md … 22-faq.md
-│   │
 │   └── assets/
+│       ├── css/
+│       │   └── main.scss            ← Theme override SCSS (overrides search-input, etc.)
 │       └── images/
-│           ├── anhtuan-profile-picture.jpeg
-│           ├── bg.jpg / bg.webp / bg-sunrise.webp / bg-sunset.webp
-│           └── favicon-*.png / favicon.svg / favicon.ico
 │
+├── local.sh                         ← Shortcut: runs `bundle exec rake serve` in docs/
 ├── architecture.md
 └── README.md
 ```
@@ -56,7 +50,7 @@ anhtuanmai.github.io/                ← git repository root
 ## Notes
 
 - **Theme**: [`mmistakes/minimal-mistakes`](https://github.com/mmistakes/minimal-mistakes) `@4.28.0`, pulled via `jekyll-remote-theme`. No `_layouts/` or `_sass/` are vendored — overrides go through `_includes/` and `_data/`.
-- **Build**: GitHub Pages auto-builds from `docs/` on push. Local dev: `cd docs && bundle exec jekyll serve --config _config.yml,_config.dev.yml` (or `rake build`).
+- **Build**: GitHub Pages auto-builds from `docs/` on push. Dev workflow: `./local.sh` from the repo root, or `cd docs && bundle exec rake serve` (live server, LAN-reachable on `:4000`). One-shot dev build: `bundle exec rake build`. The Rakefile and `_config.dev.yml` are not used in production.
 - **URL**: <https://anhtuanmai.github.io>
 - **Search**: lunr, full-content indexing enabled.
 - **Excluded from build** (see `_config.yml`): `_portfolio`, `Gemfile`, `Rakefile`, `README`, vendor and cache dirs.
