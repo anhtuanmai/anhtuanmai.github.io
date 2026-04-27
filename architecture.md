@@ -32,13 +32,19 @@ anhtuanmai.github.io/                ← git repository root
 │   ├── _portfolio/                  ← Portfolio collection (excluded from build)
 │   │
 │   ├── _includes/                   ← Theme override partials
-│   │   └── head/custom.html         ← Favicon, round avatar, base font-size
+│   │   ├── head/custom.html         ← Favicon, round avatar, base font-size
+│   │   ├── after-content.html       ← Hooks post-stats widget into post pages
+│   │   └── post-stats.html          ← Views + like button (calls Cloudflare Worker)
 │   │
 │   └── assets/
 │       ├── css/
 │       │   └── main.scss            ← Theme override SCSS (overrides search-input, etc.)
 │       └── images/
 │
+├── worker/                          ← Cloudflare Worker (counter API for views/likes)
+│   ├── src/index.js                 ← KV-backed /hit /get endpoints
+│   ├── wrangler.toml                ← Worker config (KV id set after `wrangler kv namespace create COUNTERS`)
+│   └── package.json
 ├── local.sh                         ← Shortcut: runs `bundle exec rake serve` in docs/
 ├── architecture.md
 └── README.md

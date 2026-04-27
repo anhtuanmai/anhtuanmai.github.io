@@ -15,6 +15,8 @@ Thumbs.db
 # Local environment
 .env
 .env.local
+# Untracked Jekyll override for secrets — pass via --config when building.
+docs/_config.private.yml
 
 # Logs
 *.log
@@ -40,3 +42,8 @@ codekit-config.json
 .sass-cache
 _asset_bundler_cache
 _site
+
+# Cloudflare Wrangler (worker/)
+.wrangler/
+.dev.vars
+wrangler.toml.bak

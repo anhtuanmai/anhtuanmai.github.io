@@ -392,6 +392,13 @@ permalink: /
         }
         window.ontouchmove = function () { return false; }
         window.onorientationchange = function () { document.body.scrollTop = 0; }
+
+        // Silent view tracking (no visible UI on the splash).
+        (function () {
+            var api = "{{ site.stats_api_url }}";
+            if (!api) return;
+            fetch(api + '/hit/page/home/view').catch(function () {});
+        })();
     </script>
 </body>
 
