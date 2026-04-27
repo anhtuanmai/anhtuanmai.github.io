@@ -32,10 +32,7 @@ anhtuanmai.github.io/                ← git repository root
 │   ├── _portfolio/                  ← Portfolio collection (excluded from build)
 │   │
 │   ├── _includes/                   ← Theme override partials
-│   │   ├── head/custom.html
-│   │   ├── after-content.html
-│   │   ├── before-related.html
-│   │   └── comments-providers/scripts.html
+│   │   └── head/custom.html         ← Favicon, round avatar, base font-size
 │   │
 │   └── assets/
 │       ├── css/
