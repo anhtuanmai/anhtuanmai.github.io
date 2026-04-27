@@ -14,23 +14,6 @@
     object-position: center;
   }
 
-  /* Hide previous/next post pager at the bottom of single posts */
-  .layout--single nav.pagination,
-  .pagination--pager,
-  nav.pagination:has(.pagination--pager) {
-    display: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    height: 0 !important;
-  }
-
-  /* Tighten gap between Share and Related sections after removing pager */
-  .page__share + nav.pagination + .page__related,
-  .page__share + .page__related {
-    margin-top: 1em !important;
-  }
-
   /* Decrease base font size by ~2 steps */
   html { font-size: 12px; }
   @media (min-width: 48em)   { html { font-size: 14px; } }
