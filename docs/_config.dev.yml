@@ -1,8 +1,10 @@
 # Develop override settings
 
-theme: minimal-mistakes-jekyll
-remote_theme: null
-url: http://localhost:4000
+# Use the same remote_theme as production to avoid needing the
+# minimal-mistakes-jekyll gem locally. Slower first build, no extra deps.
+# Empty url so absolute links resolve relative to whatever host the
+# browser is on (localhost, LAN IP, or a remote dev machine).
+url: ""
 
 analytics:
   provider: false

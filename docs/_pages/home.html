@@ -73,6 +73,15 @@ permalink: /
             animation: none !important;
         }
 
+        body.no-anim #wrapper,
+        body.no-anim #header,
+        body.no-anim #header nav li,
+        body.no-anim #enter-site {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
         a {
             transition: border-color 0.2s ease-in-out;
             border-bottom: dotted 1px;
@@ -350,7 +359,7 @@ permalink: /
     </style>
 </head>
 
-<body class="loading">
+<body class="loading"><script>(function(){var t=parseInt(localStorage.getItem('homeSeenAt'),10);if(t&&Date.now()-t<3600000)document.body.classList.add('no-anim');})();</script>
     <div id="wrapper">
         <div id="bg"></div>
         <div id="main">
@@ -377,7 +386,10 @@ permalink: /
         </div>
     </div>
     <script>
-        window.onload = function () { document.body.className = ''; }
+        window.onload = function () {
+            document.body.classList.remove('loading');
+            localStorage.setItem('homeSeenAt', Date.now().toString());
+        }
         window.ontouchmove = function () { return false; }
         window.onorientationchange = function () { document.body.scrollTop = 0; }
     </script>
