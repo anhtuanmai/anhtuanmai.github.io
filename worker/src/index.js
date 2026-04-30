@@ -179,6 +179,13 @@ async function handleComments(request, env, headers, m) {
       try { body = await request.json(); } catch { return json({ error: 'invalid json' }, 400, headers); }
       const text = String(body.text || '').trim();
       if (!text || text.length > TEXT_MAX) return json({ error: 'invalid text' }, 400, headers);
+      // Edits are only allowed on the same calendar day the comment was posted.
+      // The client sends its current local YYYY-MM-DD; we compare it to the
+      // stored comment date. This is a UX rule, not a security boundary —
+      // anyone with the secret could spoof, but the secret already grants edit.
+      const today = String(body.date || '').trim();
+      if (!DATE_RE.test(today)) return json({ error: 'invalid date' }, 400, headers);
+      if (today !== list[idx].date) return json({ error: 'edit window expired' }, 403, headers);
       list[idx] = { ...list[idx], text };
       await writeComments(env, section, id, list);
       return json(publicList(list), 200, headers);
