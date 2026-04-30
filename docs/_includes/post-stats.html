@@ -93,11 +93,15 @@
   var likedFlag = 'liked:' + section + '/' + id;
 
   {% if jekyll.environment == 'development' %}
-  // Increment view count once per page load (dev only — prod builds skip this).
-  fetch(base + '/view')
+  // Dev: read view count without incrementing, so the widget shows current
+  // value while local browsing doesn't pollute production counters.
+  fetch(baseGet + '/view')
     .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (d) { setStat('[data-stat="views"]', d && d.value); })
+    .then(function (d) { setStat('[data-stat="views"]', d && d.value != null ? d.value : 0); })
     .catch(function () { setStat('[data-stat="views"]', null); });
+  {% else %}
+  // Prod: increment but don't surface the count in the UI.
+  fetch(base + '/view').catch(function () {});
   {% endif %}
 
   // Read like count without incrementing.
