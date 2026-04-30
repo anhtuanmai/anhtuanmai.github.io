@@ -1,0 +1,292 @@
+<div class="post-comments" id="post-comments"
+     data-api="{{ site.stats_api_url }}"
+     data-section="blog"
+     data-id="{{ page.slug }}">
+  <h3 class="post-comments__title">Comments</h3>
+  <div class="post-comments__list" data-comments-list>
+    <p class="post-comments__empty" data-comments-empty>Loading…</p>
+  </div>
+  <form class="post-comments__form" data-comments-form>
+    <div class="post-comments__row">
+      <input type="text" name="name" placeholder="Your name" maxlength="50" required>
+    </div>
+    <div class="post-comments__row">
+      <textarea name="text" placeholder="Leave a comment" rows="3" maxlength="1000" required></textarea>
+    </div>
+    <div class="post-comments__row post-comments__row--actions">
+      <span class="post-comments__error" data-comments-error></span>
+      <button type="submit">Post</button>
+    </div>
+  </form>
+</div>
+
+<style>
+  .post-comments {
+    margin: 2em 0 0 0;
+    font-size: 0.95em;
+  }
+  .post-comments__title {
+    margin: 0 0 0.75em 0;
+    font-size: 1.1em;
+  }
+  .post-comments__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+    margin-bottom: 1.5em;
+  }
+  .post-comments__item {
+    border: 1px solid rgba(127, 127, 127, 0.25);
+    border-radius: 6px;
+    padding: 0.6em 0.8em;
+  }
+  .post-comments__meta {
+    display: flex;
+    gap: 0.6em;
+    align-items: baseline;
+    font-size: 0.85em;
+    color: #666;
+    margin-bottom: 0.3em;
+  }
+  .post-comments__name {
+    font-weight: 700;
+    color: #2a7ae2;
+    font-size: 1.1em;
+  }
+  .post-comments__text { white-space: pre-wrap; word-break: break-word; }
+  .post-comments__owner {
+    margin-left: auto;
+    display: flex;
+    gap: 0.4em;
+  }
+  .post-comments__owner button {
+    background: none;
+    border: none;
+    padding: 0.15em 0.35em;
+    font: inherit;
+    font-size: 0.95em;
+    line-height: 1;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.15s ease;
+  }
+  .post-comments__owner button:hover { color: inherit; }
+  .post-comments__owner button:last-child:hover { color: #c0392b; }
+  .post-comments__form { display: flex; flex-direction: column; gap: 0.5em; }
+  .post-comments__row { display: flex; }
+  .post-comments__row--actions { justify-content: flex-end; align-items: center; gap: 0.75em; }
+  .post-comments__form input,
+  .post-comments__form textarea {
+    width: 100%;
+    font: inherit;
+    padding: 0.4em 0.6em;
+    border: 1px solid rgba(127, 127, 127, 0.4);
+    border-radius: 4px;
+    background: inherit;
+    color: inherit;
+  }
+  .post-comments__form button {
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    padding: 0.3em 1em;
+    background: none;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+  }
+  .post-comments__form button:disabled { opacity: 0.5; cursor: default; }
+  .post-comments__error { color: #c0392b; font-size: 0.85em; }
+  .post-comments__empty { color: #888; font-style: italic; margin: 0; }
+</style>
+
+<script>
+(function () {
+  var root = document.getElementById('post-comments');
+  if (!root) return;
+  var api = root.dataset.api;
+  var section = root.dataset.section;
+  var id = root.dataset.id;
+  if (!api) return;
+
+  var base = api + '/comments/' + section + '/' + id;
+
+  // Move the comments block to the end of `.page__content` so it sits
+  // right after the article body (and after post-stats, which appends
+  // itself there first). Falls back to wherever the include was rendered
+  // if `.page__content` isn't found.
+  var pageContent = document.querySelector('.page__content');
+  if (pageContent) pageContent.appendChild(root);
+
+  var listEl = root.querySelector('[data-comments-list]');
+  var form = root.querySelector('[data-comments-form]');
+  var errorEl = root.querySelector('[data-comments-error]');
+  var nameInput = form.querySelector('input[name="name"]');
+  var textInput = form.querySelector('textarea[name="text"]');
+  var submitBtn = form.querySelector('button[type="submit"]');
+
+  var SECRETS_KEY = 'commentSecrets:' + section + ':' + id;
+  function loadSecrets() {
+    try { return JSON.parse(localStorage.getItem(SECRETS_KEY) || '{}') || {}; }
+    catch { return {}; }
+  }
+  function saveSecrets(map) { localStorage.setItem(SECRETS_KEY, JSON.stringify(map)); }
+  function rememberSecret(commentId, secret) {
+    var m = loadSecrets();
+    m[commentId] = secret;
+    saveSecrets(m);
+  }
+  function forgetSecret(commentId) {
+    var m = loadSecrets();
+    delete m[commentId];
+    saveSecrets(m);
+  }
+  function secretFor(commentId) { return loadSecrets()[commentId] || ''; }
+
+  function savedName() { return localStorage.getItem('commentName') || ''; }
+  if (savedName()) nameInput.value = savedName();
+
+  function localDate() {
+    var d = new Date();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '-' + m + '-' + day;
+  }
+
+  function render(list) {
+    listEl.textContent = '';
+    if (!list.length) {
+      var p = document.createElement('p');
+      p.className = 'post-comments__empty';
+      p.textContent = 'No comments yet. Be the first.';
+      listEl.appendChild(p);
+      return;
+    }
+    list.forEach(function (c) {
+      var item = document.createElement('div');
+      item.className = 'post-comments__item';
+
+      var meta = document.createElement('div');
+      meta.className = 'post-comments__meta';
+      var nameSpan = document.createElement('span');
+      nameSpan.className = 'post-comments__name';
+      nameSpan.textContent = c.name;
+      var sepSpan = document.createElement('span');
+      sepSpan.className = 'post-comments__sep';
+      sepSpan.textContent = '•';
+      sepSpan.setAttribute('aria-hidden', 'true');
+      var dateSpan = document.createElement('span');
+      dateSpan.className = 'post-comments__date';
+      dateSpan.textContent = c.date;
+      meta.appendChild(nameSpan);
+      meta.appendChild(sepSpan);
+      meta.appendChild(dateSpan);
+
+      if (secretFor(c.id)) {
+        var actions = document.createElement('span');
+        actions.className = 'post-comments__owner';
+        var editBtn = document.createElement('button');
+        editBtn.type = 'button';
+        editBtn.title = 'Edit';
+        editBtn.setAttribute('aria-label', 'Edit comment');
+        editBtn.innerHTML = '<i class="fas fa-pen" aria-hidden="true"></i>';
+        editBtn.addEventListener('click', function () { onEdit(c); });
+        var delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.title = 'Delete';
+        delBtn.setAttribute('aria-label', 'Delete comment');
+        delBtn.innerHTML = '<i class="fas fa-trash" aria-hidden="true"></i>';
+        delBtn.addEventListener('click', function () { onDelete(c); });
+        actions.appendChild(editBtn);
+        actions.appendChild(delBtn);
+        meta.appendChild(actions);
+      }
+
+      var body = document.createElement('div');
+      body.className = 'post-comments__text';
+      body.textContent = c.text;
+
+      item.appendChild(meta);
+      item.appendChild(body);
+      listEl.appendChild(item);
+    });
+  }
+
+  function load() {
+    fetch(base)
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(render)
+      .catch(function () {
+        listEl.textContent = '';
+        var p = document.createElement('p');
+        p.className = 'post-comments__empty';
+        p.textContent = 'Could not load comments.';
+        listEl.appendChild(p);
+      });
+  }
+
+  function onSubmit(e) {
+    e.preventDefault();
+    errorEl.textContent = '';
+    var name = nameInput.value.trim();
+    var text = textInput.value.trim();
+    if (!name || !text) return;
+    submitBtn.disabled = true;
+    fetch(base, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date: localDate(), name: name, text: text }),
+    })
+      .then(function (r) {
+        if (r.status === 429) throw new Error('Too many comments — try again later.');
+        if (!r.ok) throw new Error('Failed to post comment.');
+        return r.json();
+      })
+      .then(function (resp) {
+        if (resp && resp.comment && resp.comment.id && resp.comment.secret) {
+          rememberSecret(resp.comment.id, resp.comment.secret);
+        }
+        textInput.value = '';
+        localStorage.setItem('commentName', name);
+        render((resp && resp.comments) || []);
+      })
+      .catch(function (err) { errorEl.textContent = err.message || 'Error.'; })
+      .then(function () { submitBtn.disabled = false; });
+  }
+
+  function onEdit(c) {
+    var secret = secretFor(c.id);
+    if (!secret) return;
+    var next = window.prompt('Edit comment:', c.text);
+    if (next == null) return;
+    next = next.trim();
+    if (!next) return;
+    fetch(base + '/' + c.id, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-Comment-Secret': secret },
+      body: JSON.stringify({ text: next }),
+    })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(render)
+      .catch(function () { errorEl.textContent = 'Edit failed.'; });
+  }
+
+  function onDelete(c) {
+    var secret = secretFor(c.id);
+    if (!secret) return;
+    if (!window.confirm('Delete this comment?')) return;
+    fetch(base + '/' + c.id, {
+      method: 'DELETE',
+      headers: { 'X-Comment-Secret': secret },
+    })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (list) {
+        forgetSecret(c.id);
+        render(list);
+      })
+      .catch(function () { errorEl.textContent = 'Delete failed.'; });
+  }
+
+  form.addEventListener('submit', onSubmit);
+  load();
+})();
+</script>
