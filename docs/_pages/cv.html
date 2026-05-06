@@ -271,19 +271,22 @@ title: "Resume - Anh Tuan Mai"
             <div class="card mb-2 mb-lg-0 border-info">
               <ul class="list-group list-group-flush list-group-transparent">
                 <div class="list-group-item">
-                  <strong>Languages:</strong> <span class="badge badge-secondary">Java</span> <span class="badge badge-secondary">Kotlin</span> <span class="badge badge-secondary">Python</span> <span class="badge badge-secondary">JavaScript</span> <span class="badge badge-secondary">PHP</span> <span class="badge badge-secondary">SQL</span>
+                  <strong>Languages:</strong> <span class="badge badge-secondary">Kotlin</span> <span class="badge badge-secondary">Java</span> <span class="badge badge-secondary">TypeScript</span> <span class="badge badge-secondary">JavaScript</span> <span class="badge badge-secondary">Python</span> <span class="badge badge-secondary">SQL</span>
                 </div>
                 <div class="list-group-item">
-                  <strong>Architecture:</strong> <span class="badge badge-secondary">Hexagonal</span> <span class="badge badge-secondary">Clean</span> <span class="badge badge-secondary">Microservices</span> <span class="badge badge-secondary">DDD</span> <span class="badge badge-secondary">TDD</span> <span class="badge badge-secondary">BDD</span> <span class="badge badge-secondary">REST (OpenAPI)</span> <span class="badge badge-secondary">OAuth2</span> <span class="badge badge-secondary">JWT</span>
+                  <strong>Mobile:</strong> <span class="badge badge-secondary">Android (Native)</span> <span class="badge badge-secondary">Compose</span> <span class="badge badge-secondary">KMP/CMP</span> <span class="badge badge-secondary">React Native</span> <span class="badge badge-secondary">Firebase</span> <span class="badge badge-secondary">Gradle</span> <span class="badge badge-secondary">Bluetooth</span>
                 </div>
                 <div class="list-group-item">
-                  <strong>Frameworks &amp; tools:</strong> <span class="badge badge-secondary">Ktor</span> <span class="badge badge-secondary">Django</span> <span class="badge badge-secondary">Compose</span> <span class="badge badge-secondary">KMP/CMP</span> <span class="badge badge-secondary">Firebase</span> <span class="badge badge-secondary">Gradle</span> <span class="badge badge-secondary">Exposed (ORM)</span>
+                  <strong>Backend &amp; Architecture:</strong> <span class="badge badge-secondary">Clean</span> <span class="badge badge-secondary">Hexagonal</span> <span class="badge badge-secondary">Microservices</span> <span class="badge badge-secondary">DDD</span> <span class="badge badge-secondary">TDD/BDD</span> <span class="badge badge-secondary">REST (OpenAPI)</span> <span class="badge badge-secondary">OAuth2</span> <span class="badge badge-secondary">JWT</span> <span class="badge badge-secondary">Ktor</span> <span class="badge badge-secondary">Django</span>
                 </div>
                 <div class="list-group-item">
-                  <strong>Infra / Cloud:</strong> <span class="badge badge-secondary">GCP</span> <span class="badge badge-secondary">Docker</span> <span class="badge badge-secondary">Kubernetes</span> <span class="badge badge-secondary">Nginx</span> <span class="badge badge-secondary">Redis</span> <span class="badge badge-secondary">PostgreSQL</span> <span class="badge badge-secondary">MySQL</span> <span class="badge badge-secondary">CouchDB</span> <span class="badge badge-secondary">Prometheus</span> <span class="badge badge-secondary">Grafana</span>
+                  <strong>Infra / Cloud:</strong> <span class="badge badge-secondary">GCP</span> <span class="badge badge-secondary">Docker</span> <span class="badge badge-secondary">Kubernetes</span> <span class="badge badge-secondary">Nginx</span> <span class="badge badge-secondary">Redis</span> <span class="badge badge-secondary">Prometheus</span> <span class="badge badge-secondary">Grafana</span>
                 </div>
                 <div class="list-group-item">
-                  <strong>CI/CD &amp; Collaboration:</strong> <span class="badge badge-secondary">Bitrise</span> <span class="badge badge-secondary">Maven (Nexus)</span> <span class="badge badge-secondary">Git/GitLab</span> <span class="badge badge-secondary">Jira</span> <span class="badge badge-secondary">Confluence</span> <span class="badge badge-secondary">Agile (Scrum/Kanban)</span>
+                  <strong>Databases:</strong> <span class="badge badge-secondary">PostgreSQL</span> <span class="badge badge-secondary">MySQL</span> <span class="badge badge-secondary">SQLite</span>
+                </div>
+                <div class="list-group-item">
+                  <strong>Delivery &amp; Collaboration:</strong> <span class="badge badge-secondary">Git/GitLab</span> <span class="badge badge-secondary">Bitrise</span> <span class="badge badge-secondary">Jira</span> <span class="badge badge-secondary">Confluence</span> <span class="badge badge-secondary">Agile (Scrum/Kanban)</span>
                 </div>
                 <div class="list-group-item">
                   <strong>AI tooling:</strong> <span class="badge badge-secondary">Claude Code</span> <span class="badge badge-secondary">Gemini CLI</span>
@@ -309,7 +312,12 @@ title: "Resume - Anh Tuan Mai"
     (function () {
       var api = "{{ site.stats_api_url }}";
       if (!api) return;
-      fetch(api + '/hit/page/cv/view')
+      {% if jekyll.environment == 'development' %}
+      var endpoint = api + '/get/page/cv/view';
+      {% else %}
+      var endpoint = api + '/hit/page/cv/view';
+      {% endif %}
+      fetch(endpoint)
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (d) {
           var el = document.querySelector('#cv-views [data-stat="views"]');
